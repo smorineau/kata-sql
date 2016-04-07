@@ -23,7 +23,6 @@ is
    function get_next_separator_position(string in varchar2, start_position in pls_integer) return pls_integer is
       next_separator_position   pls_integer := length(string);
       separator_position        pls_integer := 0;
-      sum_of_positions          pls_integer := 0;
       separators                separator_list:=separator_list();
    begin
       separators := get_separators;
@@ -31,13 +30,8 @@ is
       loop
          separator_position := instr(string, separators(i), start_position);
          if separator_position <> 0 and separator_position < next_separator_position then next_separator_position := separator_position; end if;
-         sum_of_positions := sum_of_positions + separator_position;
       end loop;
-      if sum_of_positions = 0 then
-         return 0;
-      else
-         return next_separator_position;
-      end if;
+      return next_separator_position;
    end;
 
    function parse_string(string in varchar2) return integer_list is
@@ -50,7 +44,7 @@ is
       while true
       loop
          next_separator_position := get_next_separator_position(string, start_position);
-         exit when next_separator_position = 0;
+         exit when next_separator_position = length(string);
 
          terms.extend;
          terms(terms.LAST) := substr(string, start_position, next_separator_position - start_position);
