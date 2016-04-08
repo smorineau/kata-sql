@@ -13,6 +13,14 @@ is
    function parse_string(string in varchar2) return integer_list;
    function add_terms(terms in integer_list) return pls_integer;
 
+   procedure check_terms_for_negative(terms in integer_list) is
+   begin 
+      for i in terms.FIRST..terms.LAST
+      LOOP
+         if terms(i)<0 then raise_application_error(-20001,'negative not allowed : ' || to_char(terms(i))); end if;
+      END LOOP;
+   end;
+
    function get_separators return separator_list is
       separators    separator_list;
    begin
@@ -76,6 +84,7 @@ is
    begin
       if string is null then return terms_sum; end if;
       terms := parse_string(string);
+      check_terms_for_negative(terms);
       terms_sum := add_terms(terms);
       return terms_sum;
    end add;

@@ -54,6 +54,9 @@ is
       utassert.eq('Should return 9 when given "4n2,3"',
          stringcalc.add(q'[4n2,3]'),
          9);
+      utassert.throws('Should return an exception (labeled "negatives not allowed : " + negative number) when given a negative number : "2n-2,3"',
+         'declare output integer; begin output:=stringcalc.add(q''[2n-2,3]''); end;',
+         -20001);
    end;
 
    procedure ut_neg is
