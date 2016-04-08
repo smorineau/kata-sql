@@ -66,13 +66,27 @@ is
 
    end;
 
+   function remove_terms_bigger_1000(terms in integer_list) return integer_list
+   is
+       terms_lower_1001      integer_list := terms;
+       i                     pls_integer := terms.FIRST;
+   begin
+      while i is not null loop
+         if terms_lower_1001(i) > 1000 then terms_lower_1001.delete(i); end if;
+         i := terms_lower_1001.next(i);
+      end loop;
+      return terms_lower_1001;
+   end;
 
    function add_terms(terms in integer_list) return pls_integer
    is
       terms_sum         pls_integer := 0;
+      i                 pls_integer := terms.first;
    begin
-      for i in 1..terms.COUNT loop
+      while i is not null loop
+         dbms_output.put_line('term'||i||' : ' || terms(i));
          terms_sum := terms_sum + terms(i);
+         i := terms.next(i);
       end loop;
       return terms_sum;
    end;
@@ -82,10 +96,12 @@ is
       terms             integer_list := integer_list();
       terms_sum         pls_integer := 0;
    begin
+      dbms_output.put_line('******************************');
+      dbms_output.put_line('string : ' || string);
       if string is null then return terms_sum; end if;
       terms := parse_string(string);
       check_terms_for_negative(terms);
-      terms_sum := add_terms(terms);
+      terms_sum := add_terms(remove_terms_bigger_1000(terms));
       return terms_sum;
    end add;
 

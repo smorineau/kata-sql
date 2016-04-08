@@ -42,21 +42,29 @@ is
       utassert.eq('Should return 3 when given "1,2"',
          stringcalc.add(q'[1,2]'),
          3);
-      utassert.eq('Should return 3 when given "1n2"',
-         stringcalc.add('1n2'),
+      utassert.eq('Should return 3 when given "1\n2"',
+         --stringcalc.add('1'||chr(10)||'2'),
+         stringcalc.add('1
+2'),
          3);
       utassert.eq('Should return 6 when given "1,2,3"',
          stringcalc.add(q'[1,2,3]'),
          6);
-      utassert.eq('Should return 6 when given "1,2n3"',
-         stringcalc.add(q'[1,2n3]'),
+      utassert.eq('Should return 6 when given "1,2\n3"',
+         stringcalc.add('1,2'||chr(10)||'3'),
          6);
-      utassert.eq('Should return 9 when given "4n2,3"',
-         stringcalc.add(q'[4n2,3]'),
+      utassert.eq('Should return 9 when given "4\n2,3"',
+         stringcalc.add('4'||chr(10)||'2,3'),
          9);
       utassert.throws('Should return an exception (labeled "negatives not allowed : " + negative number) when given a negative number : "2n-2,3"',
-         'declare output integer; begin output:=stringcalc.add(q''[2n-2,3]''); end;',
+         'declare output integer; begin output:=stringcalc.add(q''[2'||chr(10)||'-2,3]''); end;',
          -20001);
+      utassert.eq('Should return 3 when given "2\n1001,1"',
+         stringcalc.add('2'||chr(10)||'1001,1'),
+         3);
+      utassert.eq('Should return 5 when given "1001\n2,3"',
+         stringcalc.add('1001'||chr(10)||'2,3'),
+         5);
    end;
 
    procedure ut_neg is
