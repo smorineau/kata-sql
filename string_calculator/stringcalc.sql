@@ -10,30 +10,41 @@ create or replace package body stringcalc
 is
    type integer_list is table of pls_integer;
    type separator_list is table of varchar2(1);
-   function parse_string(string in varchar2) return integer_list;
+   function parse_string(string in varchar2, in_separators in separator_list) return integer_list;
    function add_terms(terms in integer_list) return pls_integer;
 
    procedure check_terms_for_negative(terms in integer_list) is
-   begin 
+   begin
       for i in terms.FIRST..terms.LAST
-      LOOP
+      loop
          if terms(i)<0 then raise_application_error(-20001,'negative not allowed : ' || to_char(terms(i))); end if;
-      END LOOP;
+      end loop;
    end;
 
-   function get_separators return separator_list is
+   function remove_user_separators(string in varchar2) return varchar2 is
+      l_string       varchar2(4000) := string;
+   begin
+      if substr(string,1,2) = '//' then
+         l_string := substr(string,5);
+      end if;
+      return l_string;
+   end;
+
+   function get_separators(string in varchar2) return separator_list is
       separators    separator_list;
    begin
-      separators:=separator_list(',','n');
+      separators:=separator_list(',',chr(10));
+      if substr(string,1,2) = '//' then
+         separators.extend;
+         separators(separators.last) := substr(string,3,1);
+      end if;
       return separators;
    end;
 
-   function get_next_separator_position(string in varchar2, start_position in pls_integer) return pls_integer is
+   function get_next_separator_position(string in varchar2, start_position in pls_integer, separators in separator_list) return pls_integer is
       next_separator_position   pls_integer := length(string);
       separator_position        pls_integer := 0;
-      separators                separator_list:=separator_list();
    begin
-      separators := get_separators;
       for i in separators.FIRST..separators.LAST
       loop
          separator_position := instr(string, separators(i), start_position);
@@ -42,16 +53,17 @@ is
       return next_separator_position;
    end;
 
-   function parse_string(string in varchar2) return integer_list is
+   function parse_string(string in varchar2, in_separators in separator_list) return integer_list is
 
-      terms             integer_list := integer_list();
-      start_position    pls_integer := 1;
+      terms                     integer_list := integer_list();
+      start_position            pls_integer := 1;
+      separators                separator_list:= in_separators;
       next_separator_position   pls_integer;
    begin
 
       while true
       loop
-         next_separator_position := get_next_separator_position(string, start_position);
+         next_separator_position := get_next_separator_position(string, start_position, separators);
          exit when next_separator_position = length(string);
 
          terms.extend;
@@ -99,7 +111,7 @@ is
       dbms_output.put_line('******************************');
       dbms_output.put_line('string : ' || string);
       if string is null then return terms_sum; end if;
-      terms := parse_string(string);
+      terms := parse_string(remove_user_separators(string), get_separators(string));
       check_terms_for_negative(terms);
       terms_sum := add_terms(remove_terms_bigger_1000(terms));
       return terms_sum;

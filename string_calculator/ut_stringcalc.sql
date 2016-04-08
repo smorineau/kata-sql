@@ -65,6 +65,12 @@ is
       utassert.eq('Should return 5 when given "1001\n2,3"',
          stringcalc.add('1001'||chr(10)||'2,3'),
          5);
+      utassert.eq('Should return 10 when given "1,2,3,4"',
+         stringcalc.add(q'[1,2,3,4]'),
+         10);
+      utassert.eq('Should return 10 when given "//*\n1,2\n3*4"',
+         stringcalc.add('//*'||chr(10)||'1,2'||chr(10)||'3*4'),
+         10);
    end;
 
    procedure ut_neg is
