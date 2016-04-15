@@ -74,6 +74,9 @@ is
       utassert.eq('Should return 11 when given "//[***]\n2,2\n3***4"',
          stringcalc.add('//[***]'||chr(10)||'2,2'||chr(10)||'3***4'),
          11);
+      utassert.eq('Should return 15 when given "//[***][ac][dc]\n2,2\n3***4ac3dc1"',
+         stringcalc.add('//[***][ac][dc]'||chr(10)||'2,2'||chr(10)||'3***4ac3dc1'),
+         15);
    end;
 
    procedure ut_neg is

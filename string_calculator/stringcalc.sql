@@ -34,7 +34,7 @@ is
       separator                     separator_details;
       separators                    separator_list := separator_list();
    begin
---      while true loop
+      while true loop
          start_separator_position := instr(string,start_separator_delimiter,current_position) + 1;
          end_separator_position := instr(string,end_separator_delimiter,current_position);
          separator.value := substr(string, start_separator_position, end_separator_position - start_separator_position);
@@ -42,9 +42,9 @@ is
          separators.extend;
          separators(separators.last) := separator;
          current_position := end_separator_position + 1;
---         exit when substr(string, current_position, 1) = chr(10);
+         exit when substr(string, current_position, 1) = chr(10);
          if substr(string, current_position, 1) = chr(10) then dbms_output.put_line('would exit here'); end if;
---      end loop;
+      end loop;
          return separators;
    end;
 
