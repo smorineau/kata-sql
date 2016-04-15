@@ -1,8 +1,6 @@
 create or replace package body stringcalc
 is
    type integer_list is table of pls_integer;
-   --type separator_list is table of varchar2(100);
-
    type separator_details is record (value varchar2(100), next_position pls_integer);
    type separator_list is table of separator_details;
 
@@ -36,7 +34,6 @@ is
       separator                     separator_details;
       separators                    separator_list := separator_list();
    begin
-        dbms_output.put_line('get_user_separators');
 --      while true loop
          start_separator_position := instr(string,start_separator_delimiter,current_position) + 1;
          end_separator_position := instr(string,end_separator_delimiter,current_position);
@@ -58,22 +55,16 @@ is
       dbms_output.put_line('get_separators');
       -- user-specified separators
       if substr(string,1,2) = '//' then
-         --dbms_output.put_line('user separators');
-         --separators.extend;
-         --separators(separators.last) := get_user_separators(string);
          separators := get_user_separators(string);
          dbms_output.put_line('user separators : ' || separators(separators.last).value);
       end if;
-      --dbms_output.put_line('user separators : ' || separators(separators.last).value);
 
       -- default separators
       separator.value := ',';
---      separator.length := length(separator.value);
       separators.extend;
       separators(separators.last) := separator;
 
       separator.value := chr(10);
- --     separator.length := length(separator.value);
       separators.extend;
       separators(separators.last) := separator;
 
@@ -81,23 +72,18 @@ is
    end;
 
    function get_separator_details(string in varchar2, start_position in pls_integer, separators in separator_list) return separator_details is
-      --next_separator_position   pls_integer := length(string);
       separator_position        pls_integer := 0;
       separator                 separator_details;
    begin
       separator.next_position := length(string);
       for i in separators.FIRST..separators.LAST
       loop
-         dbms_output.put_line('get_separator_details loop, separators(i).value : ' || separators(i).value);
          separator_position := instr(string, separators(i).value, start_position);
-         dbms_output.put_line('before if');
          if separator_position <> 0 and separator_position < separator.next_position then
-            dbms_output.put_line('get_separator_details : in then');
             separator.next_position := separator_position;
             separator.value := separators(i).value;
          end if;
       end loop;
-      dbms_output.put_line('get_separator_details : before return');
       return separator;
    end;
 
@@ -111,10 +97,8 @@ is
 
       while true
       loop
-         dbms_output.put_line('while true loop');
          separator := get_separator_details(string, start_position, separators);
          exit when separator.next_position = length(string);
-         dbms_output.put_line('parse_string, separator.value : ' || separator.value);
 
          terms.extend;
          terms(terms.LAST) := substr(string, start_position, separator.next_position - start_position);
