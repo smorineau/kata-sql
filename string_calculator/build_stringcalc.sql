@@ -1,6 +1,7 @@
 set serveroutput on
 set lines 120
 
+@stringcalc.pks
 @stringcalc.sql
 
 @ut_stringcalc.sql
