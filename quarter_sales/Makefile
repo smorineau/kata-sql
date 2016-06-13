@@ -1,2 +1,2 @@
 test:
-	sqlplus utp/utp @test_qtr_sales.sql
+	sqlplus utp/utp @build.sql

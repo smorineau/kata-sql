@@ -1,4 +1,6 @@
 set lines 120
+set serveroutput on
+clear screen
 
 @qtr_sales.pks
 @qtr_sales.pkb
