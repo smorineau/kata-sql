@@ -2,7 +2,12 @@
 
 Given the below data model :
 
+
 ![Quarter Sales Data Model Step1](QuarterSalesDataModel-Step1.png  "Quarter Sales Data Model Step1")
+
+<!---
+![Quarter Sales Data Model Step1](/home/seb/projects/kata-sql/quarter_sales/QuarterSalesDataModel-Step1.png  "Quarter Sales Data Model Step1")
+--->
 
 Write a program that will move the data from the QUARTER_SALES table to the 3 YEAR_SALES_% tables following these rules :
 
