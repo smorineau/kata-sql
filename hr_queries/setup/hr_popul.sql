@@ -458,8 +458,8 @@ Prompt ******  Populating DEPARTMENTS table ....
 
 REM disable integrity constraint to EMPLOYEES to load data
 
-ALTER TABLE departments 
-  DISABLE CONSTRAINT dept_mgr_fk;
+--ALTER TABLE departments 
+--  DISABLE CONSTRAINT dept_mgr_fk;
 
 INSERT INTO departments VALUES 
         ( 10
@@ -2247,6 +2247,20 @@ INSERT INTO employees VALUES
         );
 
 INSERT INTO employees VALUES 
+        ( 105
+        , 'David'
+        , 'Austin'
+        , 'DAUSTINdup'
+        , '590.423.4569'
+        , TO_DATE('25-06-2005', 'dd-MM-yyyy')
+        , 'IT_PROG'
+        , 4800
+        , NULL
+        , 103
+        , 60
+        );
+
+INSERT INTO employees VALUES 
         ( 204
         , 'Hermann'
         , 'Baer'
@@ -2371,8 +2385,8 @@ VALUES  (200
 
 REM enable integrity constraint to DEPARTMENTS
 
-ALTER TABLE departments 
-  ENABLE CONSTRAINT dept_mgr_fk;
+--ALTER TABLE departments 
+--  ENABLE CONSTRAINT dept_mgr_fk;
 
 COMMIT;
 

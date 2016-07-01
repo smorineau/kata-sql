@@ -105,4 +105,6 @@ ALTER SESSION SET NLS_TERRITORY=America;
 
 @hr_analz
 
+@grant_public.sql
+
 spool off

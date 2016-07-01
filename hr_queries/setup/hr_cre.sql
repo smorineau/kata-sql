@@ -225,29 +225,29 @@ CREATE TABLE employees
                      UNIQUE (email)
     ) ;
 
-CREATE UNIQUE INDEX emp_emp_id_pk
+CREATE /*UNIQUE*/ INDEX emp_emp_id_pk
 ON employees (employee_id) ;
 
 
 ALTER TABLE employees
-ADD ( CONSTRAINT     emp_emp_id_pk
+ADD (/* CONSTRAINT     emp_emp_id_pk
                      PRIMARY KEY (employee_id)
-    , CONSTRAINT     emp_dept_fk
+    ,*/ CONSTRAINT     emp_dept_fk
                      FOREIGN KEY (department_id)
                       REFERENCES departments
     , CONSTRAINT     emp_job_fk
                      FOREIGN KEY (job_id)
                       REFERENCES jobs (job_id)
-    , CONSTRAINT     emp_manager_fk
+    /*, CONSTRAINT     emp_manager_fk
                      FOREIGN KEY (manager_id)
-                      REFERENCES employees
+                      REFERENCES employees */
     ) ;
 
-ALTER TABLE departments
-ADD ( CONSTRAINT dept_mgr_fk
-      		 FOREIGN KEY (manager_id)
-      		  REFERENCES employees (employee_id)
-    ) ;
+--ALTER TABLE departments
+--ADD ( CONSTRAINT dept_mgr_fk
+--      		 FOREIGN KEY (manager_id)
+--      		  REFERENCES employees (employee_id)
+--    ) ;
 
 
 Rem 	Useful for any subsequent addition of rows to employees table
@@ -290,9 +290,9 @@ ADD ( CONSTRAINT jhist_emp_id_st_date_pk
     , CONSTRAINT     jhist_job_fk
                      FOREIGN KEY (job_id)
                      REFERENCES jobs
-    , CONSTRAINT     jhist_emp_fk
+    /*, CONSTRAINT     jhist_emp_fk
                      FOREIGN KEY (employee_id)
-                     REFERENCES employees
+                     REFERENCES employees*/
     , CONSTRAINT     jhist_dept_fk
                      FOREIGN KEY (department_id)
                      REFERENCES departments

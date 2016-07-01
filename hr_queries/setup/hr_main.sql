@@ -150,14 +150,14 @@ ALTER SESSION SET NLS_TERRITORY=America;
 -- add comments to tables and columns
 --
 
---@__SUB__CWD__/human_resources/hr_comnt
 @hr_comnt
 
 --
 -- gather schema statistics
 --
 
---@__SUB__CWD__/human_resources/hr_analz
 @hr_analz
+
+@grant_public.sql
 
 spool off
