@@ -13,5 +13,21 @@ as
       return employee_name;
    end;
 
+   function get_employee_name_explicit(emp_id in &hr_user..employees.employee_id%type) return varchar2
+   is
+      cursor c_get_employee_name is
+      select first_name || ' ' || last_name
+        from &hr_user..employees
+       where employee_id = emp_id;
+
+      employee_name    varchar2(45);
+   begin
+      open c_get_employee_name;
+      fetch c_get_employee_name into employee_name;
+      close c_get_employee_name;
+
+      return employee_name;
+   end;
+
 end;
 /

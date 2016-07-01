@@ -21,5 +21,13 @@ as
                   'Lex De Haan');
    end;
 
+   procedure ut_get_employee_name_explicit
+   is
+   begin
+      utassert.eq('Should return "Lex De Haan" when given 102',
+                  hr_queries.get_employee_name(102),
+                  'Lex De Haan');
+   end;
+
 end;
 /
