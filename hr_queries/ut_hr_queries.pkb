@@ -13,10 +13,12 @@ as
       null;
    end;
 
-   procedure ut_template_procedure
+   procedure ut_get_employee_name
    is
    begin
-      null;
+      utassert.eq('Should return "Lex De Haan" when given 102',
+                  hr_queries.get_employee_name(102),
+                  'Lex De Haan');
    end;
 
 end;

@@ -1,5 +1,7 @@
 clear screen
 
+define hr_user=HR
+
 @hr_queries.pks
 show err
 @ut_hr_queries.pks

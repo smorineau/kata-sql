@@ -4,7 +4,7 @@ as
    procedure ut_setup;
    procedure ut_teardown;
 
-   procedure ut_template_procedure;
+   procedure ut_get_employee_name;
 
 end;
 /
