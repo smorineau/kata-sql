@@ -24,6 +24,13 @@ as
    begin
       open c_get_employee_name;
       fetch c_get_employee_name into employee_name;
+      if c_get_employee_name%notfound  then
+         raise no_data_found;
+      end if;
+      fetch c_get_employee_name into employee_name;
+      if c_get_employee_name%found  then
+         raise too_many_rows;
+      end if;
       close c_get_employee_name;
 
       return employee_name;

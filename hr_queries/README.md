@@ -48,12 +48,7 @@ The kata will require to write several functions, the preliminary step is to dec
 
 ### Step 1
 
-Write a function that returns the first and last name of an employee given his id. If the id matches more than one name or if it doesn't match any the function should raise an error. ( whose current job title is "President" )
-
-*Use case* : retourner une et une seule ligne depuis un query.
-
-**implicit cursor**
-**select ... into**
+Write a function that returns the first and last name of an employee given his id. If the id matches more than one name or if it doesn't match any the function should raise an error.
 
 ### Step 2
 
