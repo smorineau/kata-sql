@@ -80,3 +80,52 @@ Introduce/review the Cursor attributes:
 function get_it_employees implements an example.
 procedure display_it_employees is a pl/sql client of get_it_employees function.
 
+### Step 4
+
+Write a function that returns a result set composed of the following columns of the EMPLOYEES table :
+FIRST_NAME, LAST_NAME, SALARY
+
+The contents of the result set depends on the value of an argument `salary_rank`:
+
+* If the value is "ALL" then the query should return all rows for the "Sales Representative" employees.
+* If the value is "AVG_ABOVE" then the query should return all rows for the "Sales Representative" employees earning more than the average salary of the "Sales" department.
+
+Expected result for the "AVG_ABOVE" :
+
+````
+    FIRST_NAME           LAST_NAME                 SALARY
+    -------------------- ------------------------- ----------
+    Peter                Tucker                    10000
+    David                Bernstein                 9500
+    Peter                Hall                      9000
+    Janette              King                      10000
+    Patrick              Sully                     9500
+    Allan                McEwen                    9000
+    Clara                Vishney                   10500
+    Danielle             Greene                    9500
+    Lisa                 Ozer                      11500
+    Harrison             Bloom                     10000
+    Tayler               Fox                       9600
+    Ellen                Abel                      11000
+    
+    12 rows selected.
+````
+
+*Use case* : retourner un result set généré à partir d'un query choisi parmi plusieurs selon un paramètre d'entrée.
+Dans ce premier cas les deux queries ont la même structure et sont donc candidats à être strong typed.
+
+**explicit cursor**
+**static REF cursor**
+**strong typed**
+
+*Example details*
+
+No test required in this step.
+
+Use the SQL*Plus print'command to display the result :
+
+    var rc refcursor;
+    exec :rc := get_sales_rep_salary('ALL');
+    print rc;
+    exec :rc := get_sales_rep_salary('AVG_ABOVE');
+    print rc;

@@ -76,31 +76,27 @@ The contents of the result set depends on the value of an argument `salary_rank`
 * If the value is "ALL" then the query should return all rows for the "Sales Representative" employees.
 * If the value is "AVG_ABOVE" then the query should return all rows for the "Sales Representative" employees earning more than the average salary of the "Sales" department.
 
-*Use case* : retourner un result set généré à partir d'un query choisi parmi plusieurs selon un paramètre d'entrée.
-Dans ce premier cas les deux queries ont la même structure et sont donc candidats à être strong typed.
+Expected result for the "AVG_ABOVE" :
 
-**explicit cursor**
-**static REF cursor**
-**strong typed**
+````
+    FIRST_NAME           LAST_NAME                 SALARY     
+    -------------------- ------------------------- ---------- 
+    Peter                Tucker                    10000      
+    David                Bernstein                 9500       
+    Peter                Hall                      9000       
+    Janette              King                      10000      
+    Patrick              Sully                     9500       
+    Allan                McEwen                    9000       
+    Clara                Vishney                   10500      
+    Danielle             Greene                    9500       
+    Lisa                 Ozer                      11500      
+    Harrison             Bloom                     10000
+    Tayler               Fox                       9600
+    Ellen                Abel                      11000
+    
+    12 rows selected.
+````
 
-select
-       emp.*
-  from
-       hr.employees   emp JOIN
-       hr.jobs        j   ON (emp.job_id = j.job_id) JOIN
-       hr.departments dep ON (emp.department_id = dep.department_id)
- where
-       j.job_title = 'Sales Representative'
-   and emp.salary > (
-                     select
-                            avg(emp.salary) as avg_sales_dep_salary
-                       from
-                            hr.employees   emp JOIN
-                            hr.departments dep ON (emp.department_id = dep.department_id)
-                      where
-                            dep.department_name = 'Sales'
-                    )
-;
 
 ### Step 5
 

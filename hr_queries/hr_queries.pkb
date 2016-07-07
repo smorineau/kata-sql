@@ -109,7 +109,7 @@ as
       loop
          dbms_output.put_line(ship_emp.first_name || ' , ' ||
                               ship_emp.last_name  || ' , ' ||
-                              to_char(ship_emp.hire_date,'DD/MM/YYYY')  || ' , ' || 
+                              to_char(ship_emp.hire_date,'DD/MM/YYYY')  || ' , ' ||
                               ship_emp.salary);
       end loop;
    end;
@@ -135,9 +135,53 @@ as
       loop
          dbms_output.put_line(ship_emp.first_name || ' , ' ||
                               ship_emp.last_name  || ' , ' ||
-                              to_char(ship_emp.hire_date,'DD/MM/YYYY')  || ' , ' || 
+                              to_char(ship_emp.hire_date,'DD/MM/YYYY')  || ' , ' ||
                               ship_emp.salary);
       end loop;
+   end;
+
+   function get_sales_rep_salary(salary_rank in varchar2) return employees_salary
+   is
+      sales_rep_salary         employees_salary;
+   begin
+      if salary_rank = 'ALL' then
+         open sales_rep_salary for
+              select
+                     emp.first_name,
+                     emp.last_name,
+                     emp.salary
+                from
+                     &hr_user..employees   emp JOIN
+                     &hr_user..jobs        j   ON (emp.job_id = j.job_id) JOIN
+                     &hr_user..departments dep ON (emp.department_id = dep.department_id)
+               where
+                     j.job_title = 'Sales Representative';
+      end if;
+
+      if salary_rank = 'AVG_ABOVE' then
+         open sales_rep_salary for
+              select
+                     emp.first_name,
+                     emp.last_name,
+                     emp.salary
+                from
+                     &hr_user..employees   emp JOIN
+                     &hr_user..jobs        j   ON (emp.job_id = j.job_id) JOIN
+                     &hr_user..departments dep ON (emp.department_id = dep.department_id)
+               where
+                     j.job_title = 'Sales Representative'
+                 and emp.salary > (
+                                   select
+                                          avg(emp.salary) as avg_sales_dep_salary
+                                     from
+                                          &hr_user..employees   emp JOIN
+                                          &hr_user..departments dep ON (emp.department_id = dep.department_id)
+                                    where
+                                          dep.department_name = 'Sales'
+                                  );
+      end if;
+
+      return sales_rep_salary;
    end;
 
 end;
