@@ -90,7 +90,7 @@ The contents of the result set depends on the value of an argument `salary_rank`
 * If the value is "ALL" then the query should return all rows for the "Sales Representative" employees.
 * If the value is "AVG_ABOVE" then the query should return all rows for the "Sales Representative" employees earning more than the average salary of the "Sales" department.
 
-Expected result for the "AVG_ABOVE" :
+Expected result for "AVG_ABOVE" :
 
 ````
     FIRST_NAME           LAST_NAME                 SALARY
@@ -107,7 +107,7 @@ Expected result for the "AVG_ABOVE" :
     Harrison             Bloom                     10000
     Tayler               Fox                       9600
     Ellen                Abel                      11000
-    
+
     12 rows selected.
 ````
 
@@ -125,7 +125,58 @@ No test required in this step.
 Use the SQL*Plus print'command to display the result :
 
     var rc refcursor;
-    exec :rc := get_sales_rep_salary('ALL');
+    exec :rc := hr_queries.get_sales_rep_salary_strong('ALL');
     print rc;
-    exec :rc := get_sales_rep_salary('AVG_ABOVE');
+    exec :rc := hr_queries.get_sales_rep_salary_strong('AVG_ABOVE');
+    print rc;
+
+### Step 5
+
+Extending the function created in previous step, a new value "AVG_BELOW" may be assigned to the argument `salary_rank`. In this case the function should return a result set composed of the following columns of the EMPLOYEES table :
+FIRST_NAME, LAST_NAME, PHONE_NUMBER, SALARY
+
+In this case the query should return all rows for the "Sales Representative" employees earning less than the average salary of the "Sales" department.
+
+Expected result for "AVG_BELOW" :
+
+````
+FIRST_NAME           LAST_NAME                 PHONE_NUMBER         SALARY
+-------------------- ------------------------- -------------------- ----------
+Christopher          Olsen                     011.44.1344.498718   8000
+Nanette              Cambrault                 011.44.1344.987668   7500
+Oliver               Tuvault                   011.44.1344.486508   7000
+Lindsey              Smith                     011.44.1345.729268   8000
+Louise               Doran                     011.44.1345.629268   7500
+Sarath               Sewall                    011.44.1345.529268   7000
+Mattea               Marvins                   011.44.1346.329268   7200
+David                Lee                       011.44.1346.529268   6800
+Sundar               Ande                      011.44.1346.629268   6400
+Amit                 Banda                     011.44.1346.729268   6200
+William              Smith                     011.44.1343.629268   7400
+Elizabeth            Bates                     011.44.1343.529268   7300
+Sundita              Kumar                     011.44.1343.329268   6100
+Alyssa               Hutton                    011.44.1644.429266   8800
+Jonathon             Taylor                    011.44.1644.429265   8600
+Jack                 Livingston                011.44.1644.429264   8400
+Charles              Johnson                   011.44.1644.429262   6200
+
+17 rows selected.
+````
+
+*Use case* : idem cas précédent mais les différents result set ont des structures différentes
+
+**explicit cursor**
+**static REF cursor**
+**weak typed**
+
+*Example details*
+
+No test required in this step.
+
+Notice that the function will not compile if the ref cursor type is not modified to a weak type.
+
+Use the SQL*Plus print'command to display the result :
+
+    var rc refcursor;
+    exec :rc := hr_queries.get_sales_rep_salary_weak('AVG_BELOW');
     print rc;

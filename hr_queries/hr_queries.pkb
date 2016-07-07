@@ -140,7 +140,7 @@ as
       end loop;
    end;
 
-   function get_sales_rep_salary(salary_rank in varchar2) return employees_salary
+   function get_sales_rep_salary_strong(salary_rank in varchar2) return employees_salary
    is
       sales_rep_salary         employees_salary;
    begin
@@ -171,6 +171,74 @@ as
                where
                      j.job_title = 'Sales Representative'
                  and emp.salary > (
+                                   select
+                                          avg(emp.salary) as avg_sales_dep_salary
+                                     from
+                                          &hr_user..employees   emp JOIN
+                                          &hr_user..departments dep ON (emp.department_id = dep.department_id)
+                                    where
+                                          dep.department_name = 'Sales'
+                                  );
+      end if;
+
+      return sales_rep_salary;
+   end;
+
+   function get_sales_rep_salary_weak(salary_rank in varchar2) return sys_refcursor
+   is
+      sales_rep_salary         sys_refcursor;
+   begin
+      if salary_rank = 'ALL' then
+         open sales_rep_salary for
+              select
+                     emp.first_name,
+                     emp.last_name,
+                     emp.salary
+                from
+                     &hr_user..employees   emp JOIN
+                     &hr_user..jobs        j   ON (emp.job_id = j.job_id) JOIN
+                     &hr_user..departments dep ON (emp.department_id = dep.department_id)
+               where
+                     j.job_title = 'Sales Representative';
+      end if;
+
+      if salary_rank = 'AVG_ABOVE' then
+         open sales_rep_salary for
+              select
+                     emp.first_name,
+                     emp.last_name,
+                     emp.salary
+                from
+                     &hr_user..employees   emp JOIN
+                     &hr_user..jobs        j   ON (emp.job_id = j.job_id) JOIN
+                     &hr_user..departments dep ON (emp.department_id = dep.department_id)
+               where
+                     j.job_title = 'Sales Representative'
+                 and emp.salary > (
+                                   select
+                                          avg(emp.salary) as avg_sales_dep_salary
+                                     from
+                                          &hr_user..employees   emp JOIN
+                                          &hr_user..departments dep ON (emp.department_id = dep.department_id)
+                                    where
+                                          dep.department_name = 'Sales'
+                                  );
+      end if;
+
+      if salary_rank = 'AVG_BELOW' then
+         open sales_rep_salary for
+              select
+                     emp.first_name,
+                     emp.last_name,
+                     emp.phone_number,
+                     emp.salary
+                from
+                     &hr_user..employees   emp JOIN
+                     &hr_user..jobs        j   ON (emp.job_id = j.job_id) JOIN
+                     &hr_user..departments dep ON (emp.department_id = dep.department_id)
+               where
+                     j.job_title = 'Sales Representative'
+                 and emp.salary < (
                                    select
                                           avg(emp.salary) as avg_sales_dep_salary
                                      from

@@ -79,37 +79,57 @@ The contents of the result set depends on the value of an argument `salary_rank`
 Expected result for the "AVG_ABOVE" :
 
 ````
-    FIRST_NAME           LAST_NAME                 SALARY     
-    -------------------- ------------------------- ---------- 
-    Peter                Tucker                    10000      
-    David                Bernstein                 9500       
-    Peter                Hall                      9000       
-    Janette              King                      10000      
-    Patrick              Sully                     9500       
-    Allan                McEwen                    9000       
-    Clara                Vishney                   10500      
-    Danielle             Greene                    9500       
-    Lisa                 Ozer                      11500      
+    FIRST_NAME           LAST_NAME                 SALARY
+    -------------------- ------------------------- ----------    Peter                Tucker                    10000
+    David                Bernstein                 9500
+    Peter                Hall                      9000
+    Janette              King                      10000
+    Patrick              Sully                     9500
+    Allan                McEwen                    9000
+    Clara                Vishney                   10500
+    Danielle             Greene                    9500
+    Lisa                 Ozer                      11500
     Harrison             Bloom                     10000
     Tayler               Fox                       9600
     Ellen                Abel                      11000
-    
+
     12 rows selected.
 ````
 
 
 ### Step 5
 
-Extending the function created in previous step, a new value "AVG_BELOW" may be assigned to the argument `salary_rank`. In this case the function should return a result set composed of the following columns of the EMPLOYEES table :   
+Extending the function created in previous step, a new value "AVG_BELOW" may be assigned to the argument `salary_rank`. In this case the function should return a result set composed of the following columns of the EMPLOYEES table :
 FIRST_NAME, LAST_NAME, PHONE_NUMBER, SALARY
 
 In this case the query should return all rows for the "Sales Representative" employees earning less than the average salary of the "Sales" department.
 
-*Use case* : idem cas précédent mais les différents result set ont des structures différentes
+Expected result for "AVG_BELOW" :
 
-**explicit cursor**
-**static REF cursor**
-**weak typed**
+````
+FIRST_NAME           LAST_NAME                 PHONE_NUMBER         SALARY
+-------------------- ------------------------- -------------------- ----------
+Christopher          Olsen                     011.44.1344.498718   8000
+Nanette              Cambrault                 011.44.1344.987668   7500
+Oliver               Tuvault                   011.44.1344.486508   7000
+Lindsey              Smith                     011.44.1345.729268   8000
+Louise               Doran                     011.44.1345.629268   7500
+Sarath               Sewall                    011.44.1345.529268   7000
+Mattea               Marvins                   011.44.1346.329268   7200
+David                Lee                       011.44.1346.529268   6800
+Sundar               Ande                      011.44.1346.629268   6400
+Amit                 Banda                     011.44.1346.729268   6200
+William              Smith                     011.44.1343.629268   7400
+Elizabeth            Bates                     011.44.1343.529268   7300
+Sundita              Kumar                     011.44.1343.329268   6100
+Alyssa               Hutton                    011.44.1644.429266   8800
+Jonathon             Taylor                    011.44.1644.429265   8600
+Jack                 Livingston                011.44.1644.429264   8400
+Charles              Johnson                   011.44.1644.429262   6200
+
+17 rows selected.
+````
+
 
 ### Step 6
 

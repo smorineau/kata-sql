@@ -16,7 +16,9 @@ as
         last_name  &hr_user..employees.last_name%type,
         salary     &hr_user..employees.salary%type );
    type employees_salary is ref cursor return employees_salary_details;
-   function get_sales_rep_salary(salary_rank in varchar2) return employees_salary;
+   function get_sales_rep_salary_strong(salary_rank in varchar2) return employees_salary;
+   -- step 5
+   function get_sales_rep_salary_weak(salary_rank in varchar2) return sys_refcursor;
 
 end;
 /
