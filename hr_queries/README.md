@@ -61,16 +61,14 @@ Write a function
 
 ### Step 3
 
-Write a function that returns a result set composed of all the columns of table EMPLOYEES for the employees of the IT departement.
+Write a function that returns a result set composed of the following columns of the EMPLOYEES table :
+FIRST_NAME, LAST_NAME, EMPLOYEE_ID
 
-*Use case* : retourner un result set
-
-**explicit cursor**
-**static REF cursor**
+The query should return all rows for the employees of the "IT" departement.
 
 ### Step 4
 
-Write a function that will return a result set composed of the following columns of the EMPLOYEES table :
+Write a function that returns a result set composed of the following columns of the EMPLOYEES table :
 FIRST_NAME, LAST_NAME, SALARY
 
 The contents of the result set depends on the value of an argument `salary_rank`:

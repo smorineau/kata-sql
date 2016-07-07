@@ -7,5 +7,7 @@ as
    procedure ut_get_employee_name;
    procedure ut_get_employee_name_explicit;
 
+   procedure ut_get_it_employees;
+
 end;
 /

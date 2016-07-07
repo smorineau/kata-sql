@@ -36,5 +36,42 @@ as
       return employee_name;
    end;
 
+   function get_it_employees return sys_refcursor
+   is
+      it_employees       sys_refcursor;
+   begin
+      open it_employees for
+           select
+                  emp.first_name,
+                  emp.last_name,
+                  emp.employee_id
+             from
+                  &hr_user..employees   emp JOIN
+                  &hr_user..departments dep ON (emp.department_id = dep.department_id)
+            where
+                  dep.department_name = 'IT'
+           ;
+      return it_employees;
+   end;
+
+   procedure display_it_employees
+   is
+      it_employees       sys_refcursor;
+      type employees_details is record(
+         first_name &hr_user..employees.first_name%type,
+         last_name &hr_user..employees.last_name%type,
+         emp_id &hr_user..employees.employee_id%type );
+      it_employees_rec   employees_details;
+   begin
+      dbms_output.put_line('display_it_employees');
+      it_employees := get_it_employees;
+      loop
+         fetch it_employees into it_employees_rec ;
+         dbms_output.put_line(it_employees_rec.emp_id || ' , ' || it_employees_rec.first_name || ' , ' || it_employees_rec.last_name);
+         exit when it_employees%notfound;
+      end loop;
+      close it_employees;
+   end;
+
 end;
 /
