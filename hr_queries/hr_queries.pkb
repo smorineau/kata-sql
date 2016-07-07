@@ -62,13 +62,28 @@ as
          last_name &hr_user..employees.last_name%type,
          emp_id &hr_user..employees.employee_id%type );
       it_employees_rec   employees_details;
+
+      function boolean_to_string(bool in boolean) return varchar2
+      is
+      begin
+         if bool then return 'TRUE'; else return 'FALSE'; end if;
+      end;
+
    begin
+      dbms_output.put_line('---------------------');
       dbms_output.put_line('display_it_employees');
+      dbms_output.put_line('---------------------');
+      dbms_output.put_line('==> it_employees%isopen : ' || boolean_to_string(it_employees%isopen) );
       it_employees := get_it_employees;
+      dbms_output.put_line('==> it_employees%isopen : ' || boolean_to_string(it_employees%isopen) );
+      dbms_output.put_line('==> it_employees%found : ' || boolean_to_string(it_employees%found) );
+      dbms_output.put_line('==> it_employees%rowcount : ' || it_employees%rowcount );
       loop
          fetch it_employees into it_employees_rec ;
-         dbms_output.put_line(it_employees_rec.emp_id || ' , ' || it_employees_rec.first_name || ' , ' || it_employees_rec.last_name);
+         dbms_output.put_line('==> it_employees%found : ' || boolean_to_string(it_employees%found) );
+         dbms_output.put_line('==> it_employees%rowcount : ' || it_employees%rowcount );
          exit when it_employees%notfound;
+         dbms_output.put_line(it_employees_rec.emp_id || ' , ' || it_employees_rec.first_name || ' , ' || it_employees_rec.last_name);
       end loop;
       close it_employees;
    end;

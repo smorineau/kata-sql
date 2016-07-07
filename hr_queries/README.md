@@ -61,10 +61,12 @@ Write a function
 
 ### Step 3
 
-Write a function that returns a result set composed of the following columns of the EMPLOYEES table :
+1 - Write a function that returns a result set composed of the following columns of the EMPLOYEES table :
 FIRST_NAME, LAST_NAME, EMPLOYEE_ID
 
 The query should return all rows for the employees of the "IT" departement.
+
+2 - Write a procedure using the above function and displaying the result set.
 
 ### Step 4
 

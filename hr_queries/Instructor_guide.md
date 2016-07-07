@@ -32,10 +32,12 @@ It is not the fact that it is declared or not that makes it explicit : an implic
 
 ### Step 3
 
-Write a function that returns a result set composed of the following columns of the EMPLOYEES table :
+1 - Write a function that returns a result set composed of the following columns of the EMPLOYEES table :
 FIRST_NAME, LAST_NAME, EMPLOYEE_ID
 
 The query should return all rows for the employees of the "IT" departement.
+
+2 - Write a procedure using the above function and displaying the result set.
 
 *Use case* : pass a result set to a client
 
@@ -46,13 +48,14 @@ The query should return all rows for the employees of the "IT" departement.
 
 It is up to the client to perform the FETCH and CLOSE for the cursor.
 
+Introduce/review the Cursor attributes:
+*cursor*%FOUND          Returns TRUE if a record was fetched successfully
+*cursor*%NOTFOUND       Returns TRUE if a record was not fetched successfully
+*cursor*%ROWCOUNT       Returns the number of rows fetched from the specified cursor at that point in time
+*cursor*%ISOPEN         Returns TRUE if the specified cursor is opened
+
 *Example details*
 
 function get_it_employees implements an example.
 procedure display_it_employees is a pl/sql client of get_it_employees function.
 
-Cursor attributes:
-*cursor*%FOUND          Returns TRUE if a record was fetched successfully
-*cursor*%NOTFOUND       Returns TRUE if a record was not fetched successfully
-*cursor*%ROWCOUNT       Returns the number of rows fetched from the specified cursor at that point in time
-*cursor*%ISOPEN         Returns TRUE if the specified cursor is opened
