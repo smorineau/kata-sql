@@ -52,12 +52,10 @@ Write a function that returns the first and last name of an employee given his i
 
 ### Step 2
 
-Write a function
+Write a procedure that displays the following columns of the EMPLOYEES table :
+FIRST_NAME, LAST_NAME, HIRE_DATE, SALARY
 
-*Use case* : itérer sur le résultat d'un query, comme ici par exemple pour afficher une liste "courte" sur la console
-
-**implicit cursor**
-**for ... in**
+The procedure should display all rows for the employees of the "Shipping" departement (columns may be comma-separated).
 
 ### Step 3
 

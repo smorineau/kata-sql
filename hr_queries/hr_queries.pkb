@@ -88,5 +88,57 @@ as
       close it_employees;
    end;
 
+   procedure display_shipping_employees
+   is
+   begin
+      dbms_output.put_line('---------------------');
+      dbms_output.put_line('display_shipping_employees');
+      dbms_output.put_line('---------------------');
+      for ship_emp in (
+         select
+                emp.first_name,
+                emp.last_name,
+                emp.hire_date,
+                emp.salary
+           from
+                &hr_user..employees   emp JOIN
+                &hr_user..departments dep ON (emp.department_id = dep.department_id)
+          where
+                dep.department_name = 'Shipping'
+         )
+      loop
+         dbms_output.put_line(ship_emp.first_name || ' , ' ||
+                              ship_emp.last_name  || ' , ' ||
+                              to_char(ship_emp.hire_date,'DD/MM/YYYY')  || ' , ' || 
+                              ship_emp.salary);
+      end loop;
+   end;
+
+   procedure display_shipping_employees2
+   is
+      cursor get_shipping_employees is
+         select
+                emp.first_name,
+                emp.last_name,
+                emp.hire_date,
+                emp.salary
+           from
+                &hr_user..employees   emp JOIN
+                &hr_user..departments dep ON (emp.department_id = dep.department_id)
+          where
+                dep.department_name = 'Shipping';
+   begin
+      dbms_output.put_line('---------------------');
+      dbms_output.put_line('display_shipping_employees2');
+      dbms_output.put_line('---------------------');
+      for ship_emp in get_shipping_employees
+      loop
+         dbms_output.put_line(ship_emp.first_name || ' , ' ||
+                              ship_emp.last_name  || ' , ' ||
+                              to_char(ship_emp.hire_date,'DD/MM/YYYY')  || ' , ' || 
+                              ship_emp.salary);
+      end loop;
+   end;
+
 end;
 /

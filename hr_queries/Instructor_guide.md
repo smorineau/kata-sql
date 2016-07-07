@@ -8,7 +8,7 @@ The kata will require to write several functions, the preliminary step is to dec
 
 Write a function that returns the first and last name of an employee given his id. If the id matches more than one name or if it doesn't match any the function should raise an error.
 
-*Use case* : retourner une et une seule ligne depuis un query.
+*Use case* : return one and only one row.
 
 *Purpose of this step*
 
@@ -25,10 +25,31 @@ Use ID 1 for no_data_found, ID 105 for too_many_rows.
 function get_employee_name is an example with a "select ... into" construct.
 function get_employee_name_explicit is an example with an explicit cursor : fetch is done twice and code is longer.
 
-
 ### Step 2
 
-It is not the fact that it is declared or not that makes it explicit : an implicit cursor may be declared using the "for ... in" syntax.
+Write a procedure that displays the following columns of the EMPLOYEES table :
+FIRST_NAME, LAST_NAME, HIRE_DATE, SALARY
+
+The procedure should display all rows for the employees of the "Shipping" departement (columns may be comma-separated).
+
+*Use case* : iterate on a result set, comme ici par exemple pour afficher une liste "courte" sur la console. If it can't be done in plain SQL, then use an implicit cursor loop.
+
+*Purpose of this step*
+
+**implicit cursor**
+**for ... in**
+
+No need to open, fetch and close the cursor.
+No need to test for the loop exit condition ("EXIT WHEN cursor%NOTFOUND").
+No need to declare the assignment variable : it is implicitly declared and correctly typed to hold the cursor's result set structure.
+
+Optionally the cursor may be declared.
+
+*Example details*
+
+No test required in this step.
+procedure display_shipping_employees : inline cursor
+procedure display_shipping_employees2 : declared cursor
 
 ### Step 3
 

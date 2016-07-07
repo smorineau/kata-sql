@@ -18,5 +18,7 @@ set serveroutput on
 exec utplsql.test ('hr_queries', recompile_in => FALSE);
 
 exec hr_queries.display_it_employees;
+exec hr_queries.display_shipping_employees;
+exec hr_queries.display_shipping_employees2;
 
 exit
