@@ -133,7 +133,28 @@ Charles              Johnson                   011.44.1644.429262   6200
 
 ### Step 6
 
-1. retourner un result set dont le query n'est pas connu au moment du compile time
+Write a function that returns a result set composed of the following columns of the EMP_DETAILS_VIEW view :
+EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_NAME, JOB_TITLE, COUNTRY_NAME
+
+The function accepts three optional parameters `p_region_name`, `p_dept_name`, `p_max_salary`.
+
+These parameters will be evaluated as predicates :
+EMP_DETAILS_VIEWS.REGION_NAME like p_region_name
+EMP_DETAILS_VIEWS.SALARY < p_max_salary
+EMP_DETAILS_VIEWS.DEPARTMENT_NAME like p_dept_name
+
+Expected results for p_region_name='', p_dept_name='', p_max_salary=
+ examples with 3 values, 2 values, mixed-up cases
+
+Expected results for p_region_name='meri', p_dept_name='IT', p_max_salary = 4800 : emp_id 107
+
+Expected results for p_region_name='eur', p_dept_name='Public', p_max_salary not specified : emp_id 204
+
+
+
+
+retourner un result set dont le query n'est pas connu au moment du compile time
+
 cas typique : différentes clauses where
 **explicit cursor**
 **dynamic REF cursor**

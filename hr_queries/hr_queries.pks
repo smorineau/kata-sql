@@ -19,6 +19,10 @@ as
    function get_sales_rep_salary_strong(salary_rank in varchar2) return employees_salary;
    -- step 5
    function get_sales_rep_salary_weak(salary_rank in varchar2) return sys_refcursor;
+   -- step 6
+   function get_emp_details(p_region_name in varchar2,
+                            p_dept_name   in varchar2,
+                            p_max_salary  in number) return sys_refcursor;
 
 end;
 /

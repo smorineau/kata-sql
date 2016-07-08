@@ -252,5 +252,27 @@ as
       return sales_rep_salary;
    end;
 
+   function get_emp_details(p_region_name in varchar2,
+                            p_dept_name   in varchar2,
+                            p_max_salary  in number) return sys_refcursor
+   is
+      emp_details          sys_refcursor;
+      emp_details_query    varchar2(1000);
+   begin
+      emp_details_query := '
+      select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_NAME, JOB_TITLE, COUNTRY_NAME
+      from &hr_user..emp_details_view';
+
+      if p_region_name is not null then
+         emp_details_query := emp_details_query ||
+         ' where upper(region_name) like ''%''||upper(:p_region_name)||''%'' ';
+      end if;
+
+      dbms_output.put_line(emp_details_query);
+      open emp_details for emp_details_query using p_region_name;
+      return emp_details;
+      --return null;
+   end;
+
 end;
 /
