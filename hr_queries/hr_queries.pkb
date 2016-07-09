@@ -252,9 +252,9 @@ as
       return sales_rep_salary;
    end;
 
-   function get_emp_details(p_region_name in varchar2,
-                            p_dept_name   in varchar2,
-                            p_max_salary  in number) return sys_refcursor
+   function get_emp_details(p_region_name in varchar2 default null,
+                            p_dept_name   in varchar2 default null,
+                            p_max_salary  in number   default null) return sys_refcursor
    is
       emp_details          sys_refcursor;
       emp_details_query    varchar2(1000);

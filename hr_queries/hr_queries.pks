@@ -20,9 +20,9 @@ as
    -- step 5
    function get_sales_rep_salary_weak(salary_rank in varchar2) return sys_refcursor;
    -- step 6
-   function get_emp_details(p_region_name in varchar2,
-                            p_dept_name   in varchar2,
-                            p_max_salary  in number) return sys_refcursor;
+   function get_emp_details(p_region_name in varchar2 default null,
+                            p_dept_name   in varchar2 default null,
+                            p_max_salary  in number   default null) return sys_refcursor;
 
 end;
 /
