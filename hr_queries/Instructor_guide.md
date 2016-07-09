@@ -42,6 +42,7 @@ The procedure should display all rows for the employees of the "Shipping" depart
 No need to open, fetch and close the cursor.
 No need to test for the loop exit condition ("EXIT WHEN cursor%NOTFOUND").
 No need to declare the assignment variable : it is implicitly declared and correctly typed to hold the cursor's result set structure.
+Implicit cursor "for ... in" automatically performs bulk collect starting with Oracle 10g.
 
 Optionally the cursor may be declared.
 
@@ -180,3 +181,60 @@ Use the SQL*Plus print'command to display the result :
     var rc refcursor;
     exec :rc := hr_queries.get_sales_rep_salary_weak('AVG_BELOW');
     print rc;
+
+
+### Step 6
+
+Write a function that returns a result set composed of the following columns of the EMP_DETAILS_VIEW view :
+EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_NAME, JOB_TITLE, COUNTRY_NAME
+
+The function accepts three optional parameters `p_region_name`, `p_dept_name`, `p_max_salary`.
+
+These parameters will be evaluated as predicates :
+EMP_DETAILS_VIEWS.REGION_NAME like p_region_name
+EMP_DETAILS_VIEWS.SALARY < p_max_salary
+EMP_DETAILS_VIEWS.DEPARTMENT_NAME like p_dept_name
+
+
+Expected results for p_region_name='meri', p_dept_name='IT', p_max_salary = 4800 :
+
+````
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME     SALARY  DEPARTMENT_NAME  JOB_TITLE   COUNTRY_NAME
+----------- --------------- ------------- ------- ---------------- ----------- ------------------------
+107         Diana           Lorentz       4200    IT               Programmer  United States of America
+````
+
+
+Expected results for p_region_name='eur', p_dept_name='Public', p_max_salary not specified :
+
+````
+EMPLOYEE_ID FIRST_NAME  LAST_NAME  SALARY  DEPARTMENT_NAME                JOB_TITLE                           COUNTRY_NAME
+----------- ---------- ---------- ------- ------------------------------ ----------------------------------- -------------
+204         Hermann    Baer       10000   Public Relations               Public Relations Representative     Germany
+````
+
+Expected results for p_region_name not specified, p_dept_name not specified, p_max_salary = 2500 :
+
+````
+EMPLOYEE_ID FIRST_NAME  LAST_NAME  SALARY DEPT_NAME JOB_TITLE   COUNTRY_NAME
+----------- ----------- ---------- ------ --------- ----------- ---------------
+127         James       Landry     2400   Shipping  Stock Clerk United States of America 
+128         Steven      Markle     2200   Shipping  Stock Clerk United States of America 
+132         TJ          Olson      2100   Shipping  Stock Clerk United States of America 
+135         Ki          Gee        2400   Shipping  Stock Clerk United States of America 
+136         Hazel       Philtanker 2200   Shipping  Stock Clerk United States of America 
+
+````
+
+
+*Use case* : retourner un result set dont le query n'est pas connu au moment du compile time
+
+cas typique : différentes clauses where
+
+**explicit cursor**
+**dynamic REF cursor***
+
+*Example details*
+
+Three test cases suggested in this step.

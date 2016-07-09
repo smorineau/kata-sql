@@ -266,12 +266,30 @@ as
       if p_region_name is not null then
          emp_details_query := emp_details_query ||
          ' where upper(region_name) like ''%''||upper(:p_region_name)||''%'' ';
+      else
+         emp_details_query := emp_details_query ||
+         ' where ( 1=1 or :p_region_name is null ) ';
+      end if;
+
+      if p_dept_name is not null then
+         emp_details_query := emp_details_query ||
+         ' and upper(department_name) like ''%''||upper(:p_dept_name)||''%'' ';
+      else
+         emp_details_query := emp_details_query ||
+         ' and ( 1=1 or :p_dept_name is null ) ';
+      end if;
+
+      if p_max_salary is not null then
+         emp_details_query := emp_details_query ||
+         ' and salary < :p_max_salary ';
+      else
+         emp_details_query := emp_details_query ||
+         ' and ( 1=1 or :p_max_salary is null ) ';
       end if;
 
       dbms_output.put_line(emp_details_query);
-      open emp_details for emp_details_query using p_region_name;
+      open emp_details for emp_details_query using p_region_name, p_dept_name, p_max_salary;
       return emp_details;
-      --return null;
    end;
 
 end;

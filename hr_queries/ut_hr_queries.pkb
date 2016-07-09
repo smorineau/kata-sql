@@ -90,7 +90,7 @@ as
             ]';
 
          utassert.eq_refc_query (
-            q'[Should return row of employee_id 107 when given 'meri','IT',4800]',
+            q'[nominal_case : Should return row of employee_id 107 when given 'meri','IT',4800]',
             'hr_queries.get_emp_details',
             proc_params,
             0,
@@ -114,7 +114,32 @@ as
             ]';
 
          utassert.eq_refc_query (
-            q'[Should return row of employee_id 204 when given 'eur','Public',null]',
+            q'[salary_null_and_case_mismatch : Should return row of employee_id 204 when given 'eur','Public',null]',
+            'hr_queries.get_emp_details',
+            proc_params,
+            0,
+            expected_resultset
+         );
+      end;
+
+      procedure region_and_dept_name_null
+      is
+         proc_params         utplsql_util.utplsql_params;
+         expected_resultset  varchar2(1000);
+      begin
+         utplsql_util.reg_out_param (0, 'REFCURSOR', proc_params);
+         utplsql_util.reg_in_param (1, '', proc_params);
+         utplsql_util.reg_in_param (2, '', proc_params);
+         utplsql_util.reg_in_param (3, 2500, proc_params);
+
+         expected_resultset := q'[
+            select employee_id, first_name, last_name, salary, department_name, job_title, country_name
+              from &hr_user..emp_details_view
+             where employee_id in (127,128,132,135,136)
+            ]';
+
+         utassert.eq_refc_query (
+            q'[region_and_dept_name_null : Should return 5 rows given null,null,2500]',
             'hr_queries.get_emp_details',
             proc_params,
             0,
@@ -125,6 +150,7 @@ as
    begin
       nominal_case;
       salary_null_and_case_mismatch;
+      region_and_dept_name_null;
    end;
 
 end;

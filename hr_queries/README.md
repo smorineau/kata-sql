@@ -80,7 +80,8 @@ Expected result for the "AVG_ABOVE" :
 
 ````
     FIRST_NAME           LAST_NAME                 SALARY
-    -------------------- ------------------------- ----------    Peter                Tucker                    10000
+    -------------------- ------------------------- ----------    
+    Peter                Tucker                    10000
     David                Bernstein                 9500
     Peter                Hall                      9000
     Janette              King                      10000
@@ -143,18 +144,36 @@ EMP_DETAILS_VIEWS.REGION_NAME like p_region_name
 EMP_DETAILS_VIEWS.SALARY < p_max_salary
 EMP_DETAILS_VIEWS.DEPARTMENT_NAME like p_dept_name
 
-Expected results for p_region_name='', p_dept_name='', p_max_salary=
- examples with 3 values, 2 values, mixed-up cases
 
-Expected results for p_region_name='meri', p_dept_name='IT', p_max_salary = 4800 : emp_id 107
+Expected results for p_region_name='meri', p_dept_name='IT', p_max_salary = 4800 :
 
-Expected results for p_region_name='eur', p_dept_name='Public', p_max_salary not specified : emp_id 204
+````
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME     SALARY  DEPARTMENT_NAME  JOB_TITLE   COUNTRY_NAME
+----------- --------------- ------------- ------- ---------------- ----------- ------------------------
+107         Diana           Lorentz       4200    IT               Programmer  United States of America
+````
 
 
+Expected results for p_region_name='eur', p_dept_name='Public', p_max_salary not specified :
+
+````
+EMPLOYEE_ID FIRST_NAME LAST_NAME  SALARY  DEPARTMENT_NAME                JOB_TITLE                           COUNTRY_NAME
+----------- ---------- ---------- ------- ------------------------------ ----------------------------------- -------------
+204         Hermann    Baer       10000   Public Relations               Public Relations Representative     Germany
+````
+
+Expected results for p_region_name not specified, p_dept_name not specified, p_max_salary = 2500 :
+
+````
+EMPLOYEE_ID FIRST_NAME  LAST_NAME  SALARY DEPT_NAME JOB_TITLE   COUNTRY_NAME
+----------- ----------- ---------- ------ --------- ----------- ------------------------
+127         James       Landry     2400   Shipping  Stock Clerk United States of America 
+128         Steven      Markle     2200   Shipping  Stock Clerk United States of America 
+132         TJ          Olson      2100   Shipping  Stock Clerk United States of America 
+135         Ki          Gee        2400   Shipping  Stock Clerk United States of America 
+136         Hazel       Philtanker 2200   Shipping  Stock Clerk United States of America 
+
+````
 
 
-retourner un result set dont le query n'est pas connu au moment du compile time
-
-cas typique : différentes clauses where
-**explicit cursor**
-**dynamic REF cursor**
